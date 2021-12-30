@@ -1,0 +1,63 @@
+{% extends 'hospital/receptionist_base.html' %}{% load static %} {% block content %}{% load widget_tweaks %}
+
+
+<div class="card mb-0 ">
+    <div class="card-header ">
+        Doctors &nbsp Applied For Registration
+    </div>
+    <div class="card-body ">
+        <div class="table-responsive ">
+            <table class="table table-hover ">
+                <thead>
+                    <tr>
+
+                        <th scope="col ">Name</th>
+                        <th scope="col ">Profile Picture</th>
+                        <th scope="col ">Mobile</th>
+                        <th scope="col ">Address</th>
+                        <th scope="col ">Department</th>
+                        <th scope="col ">Approve</th>
+                        <th scope="col ">Reject</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for d in doctors %}
+
+                    <tr>
+                        <td>
+
+                            <strong>{{d.get_name}}</strong>
+
+                        </td>
+                        <td> <img src="{% static d.profile_pic.url %} " alt="Profile Pic " height="40px " width="40px " /></td>
+                        <td>
+                            <div class="d-flex align-items-center nowrap text-primary ">
+                                <span class="icofont-ui "></span>{{d.mobile}}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="d-flex align-items-center nowrap text-primary ">
+                                <span class="icofont-ui-cell-phone p-0 me-2 "></span>{{d.address}}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="d-flex align-items-center nowrap text-primary ">
+                                <span class="icofont-ui-cell-phone p-0 me-2 "></span>{{d.department}}
+                            </div>
+                        </td>
+                        <td>
+                            <a class="btn btn-primary btn-xs " href="{% url 'approve-doctor' d.id %} "><span class="glyphicon glyphicon-ok "></span></a>
+                        </td>
+                        <td>
+                            <a class="btn btn-danger btn-xs " href="{% url 'reject-doctor' d.id %} "><span class="glyphicon glyphicon-trash "></span></a>
+                        </td>
+
+                    </tr>
+                </tbody>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock content %}

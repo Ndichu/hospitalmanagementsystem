@@ -1,0 +1,61 @@
+{% extends 'hospital/receptionist_base.html' %}{% load static %} {% block content %}{% load widget_tweaks %}
+
+
+<div class="card mb-0 ">
+    <div class="card-header ">
+        Scheduled visits list
+    </div>
+    <div class="card-body ">
+        <div class="table-responsive ">
+            <table class="table table-hover ">
+                <thead>
+                    <tr>
+
+                        <th scope="col ">Doctor Name</th>
+                        <th scope="col ">Patient Name</th>
+                        <th scope="col ">Description</th>
+                        <th scope="col ">Contacts</th>
+                        <th scope="col ">Date</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for a in appointments %}
+                    <tr>
+
+
+                        <strong>{{a.doctorName}}</strong>
+
+                        </td>
+                        <td>
+                            <div class="d-flex align-items-center nowrap text-primary ">
+                                <span class="icofont-ui-wheelchair "></span>{{a.patientName}}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="d-flex align-items-center nowrap text-primary ">
+                                <span class="icofont-ui-book p-0 me-2 "></span>{{a.description}}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="d-flex align-items-center nowrap text-primary ">
+                                <span class="icofont-ui-calendar p-0 me-2 "></span>{{a.appointmentDate}}
+                            </div>
+                            <td>
+                                {%if d.status%}
+                                <td>
+                                    <div class="actions ">
+                                        <button class="btn btn-info btn-sm btn-square rounded-pill ">
+                          <span class="btn-icon icofont-ui ">admitted</span>
+                        </button> {% else %} {% endif %}
+                                    </div>
+                                </td>
+
+                    </tr>
+                </tbody>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock content %}

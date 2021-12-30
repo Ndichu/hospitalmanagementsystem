@@ -1,0 +1,22 @@
+{% extends 'hospital/patient_base.html' %}{% load static %} {% block content %}{% load widget_tweaks %}
+
+<div class="row ">
+    <div class="col col-12 col-md-6 col-xl-4">
+        <div class="card animated fadeInUp delay-02s bg-light ">
+            <div class="card-body ">
+                <div class="row align-items-center ">
+                    <div class="col col-5 ">
+                        <div class="icon p-0 fs-48 text-primary opacity-50 icofont-doctor "></div>
+                    </div>
+                    <div class="col col-7 ">
+                        <h6 class="mt-0 mb-1 ">View Your Schedule Visits</h6>
+                        <div class="count text-primary fs-20 "><a href="/patient-view-appointment">List Now</a></div>
+                        <p>List your Schedule Visit</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock content %}

@@ -1,0 +1,70 @@
+{% extends 'hospital/receptionist_base.html' %}{% load static %} {% block content %}{% load widget_tweaks %}
+
+
+<div class="card mb-0 ">
+    <div class="card-header ">
+        Patients who Applied For Admission
+    </div>
+    <div class="card-body ">
+        <div class="table-responsive ">
+            <table class="table table-hover ">
+                <thead>
+                    <tr>
+
+                        <th scope="col ">Name</th>
+                        <th scope="col ">Profile Picture</th>
+                        <th scope="col ">Type</th>
+                        <th scope="col ">Symptoms</th>
+                        <th scope="col ">Mobile</th>
+                        <th scope="col ">Address</th>
+                        <th scope="col ">Approve</th>
+                        <th scope="col ">Reject</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for p in patients %}
+
+                    <tr>
+                        <td>
+
+                            <strong> {{p.get_name}}</strong>
+
+                        </td>
+                        <td> <img src="{% static d.profile_pic.url %} " alt="Profile Pic " height="40px " width="40px " /></td>
+                        <td>
+                            <div class="d-flex align-items-center nowrap text-primary ">
+                                <span class="icofont-ui "></span>{{p.classification}}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="d-flex align-items-center nowrap text-primary ">
+                                <span class="icofont-ui "></span>{{p.symptoms}}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="d-flex align-items-center nowrap text-primary ">
+                                <span class="icofont-ui-cell-phone p-0 me-2 "></span>{{p.mobile}}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="d-flex align-items-center nowrap text-primary ">
+                                <span class="icofont-ui-cell-phone p-0 me-2 "></span>{{p.address}}
+                            </div>
+                        </td>
+                        <td>
+                            <a class="btn btn-primary btn-xs " href="{% url 'approve-patient' p.id %} "><span class="glyphicon glyphicon-ok "></span></a>
+                        </td>
+                        <td>
+                            <a class="btn btn-danger btn-xs " href="{% url 'reject-patient' p.id %} "><span class="glyphicon glyphicon-trash "></span></a>
+                        </td>
+
+                    </tr>
+                </tbody>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

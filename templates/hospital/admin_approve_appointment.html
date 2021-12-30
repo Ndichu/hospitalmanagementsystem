@@ -1,0 +1,61 @@
+{% extends 'hospital/receptionist_base.html' %}{% load static %} {% block content %}{% load widget_tweaks %}
+
+<div class="card mb-0 ">
+    <div class="card-header ">
+        Recent Patients
+    </div>
+    <div class="card-body ">
+        <div class="table-responsive ">
+            <table class="table table-hover ">
+                <thead>
+                    <tr>
+
+                        <th scope="col ">Doctor Name</th>
+                        <th scope="col ">Patient Name</th>
+                        <th scope="col ">Description</th>
+                        <th scope="col ">Date</th>
+                        <th scope="col ">Approve</th>
+                        <th scope="col ">Reject</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for a in appointments %}
+                    <tr>
+                        <td> <img src="{% static p.profile_pic.url %} " alt="Profile Pic " height="40px " width="40px " /></td>
+
+                        <td>
+
+                            <strong>{{a.doctorName}}</strong>
+                        </td>
+                        <td>
+                            <div class="d-flex align-items-center nowrap text-primary ">
+                                <span class="icofont-ui "></span>{{a.patientName}}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="d-flex align-items-center nowrap text-primary ">
+                                <span class="icofont-ui-cell-phone p-0 me-2 "></span>{{a.description}}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="d-flex align-items-center nowrap text-primary ">
+                                <span class="icofont-ui-cell-phone p-0 me-2 "></span>{{a.appointmentDate}}
+                            </div>
+                        </td>
+
+                        <td>
+                            <a class="btn btn-primary btn-xs " href="{% url 'approve-appointment' a.id %} "><span class="glyphicon glyphicon-ok "></span></a>
+                        </td>
+                        <td>
+                            <a class="btn btn-danger btn-xs " href="{% url 'reject-appointment' a.id %} "><span class="glyphicon glyphicon-trash "></span></a>
+                        </td>
+
+                    </tr>
+                </tbody>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock content %}

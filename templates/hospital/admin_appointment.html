@@ -1,0 +1,39 @@
+{% extends 'hospital/receptionist_base.html' %}{% load static %} {% block content %}{% load widget_tweaks %}
+
+<div class="row ">
+    <div class="col col-12 col-md-6 col-xl-6 ">
+        <div class="card animated fadeInUp delay-03s bg-light ">
+            <div class="card-body ">
+                <div class="row align-items-center ">
+                    <div class="col col-5 ">
+                        <div class="icon p-0 fs-48 text-primary opacity-50 icofont-doctor "></div>
+                    </div>
+                    <div class="col col-7 ">
+                        <h6 class="mt-0 mb-1 ">View Scheduled visits</h6>
+                        <div class="count text-primary fs-20 "><a href="/Receptionist-view-appointment ">View Scheduled visits</a></div>
+                        <p>View Schedules</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col col-12 col-md-6 col-xl-6 ">
+        <div class="card animated fadeInUp delay-02s bg-light ">
+            <div class="card-body ">
+                <div class="row align-items-center ">
+                    <div class="col col-5 ">
+                        <div class="icon p-0 fs-48 text-primary opacity-50 icofont-doctor "></div>
+                    </div>
+                    <div class="col col-7 ">
+                        <h6 class="mt-0 mb-1 ">Book Scheduled visits</h6>
+                        <div class="count text-primary fs-20 "><a href="/Receptionist-add-appointment ">Book Schedule</a></div>
+                        <p>Book visits</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+{% endblock content %}

@@ -1,0 +1,62 @@
+{% extends 'hospital/doctorbase.html' %}{% load static %} {% block content %}{% load widget_tweaks %}
+
+<div class="card mb-0 ">
+    <div class="card-header ">
+        Your Discharged Patient List
+    </div>
+    <div class="card-body ">
+        <div class="table-responsive ">
+            <table class="table table-hover ">
+                <thead>
+                    <tr>
+                        <th scope="col ">Name</th>
+                        <th scope="col ">Admit Date</th>
+                        <th scope="col ">Release Date</th>
+                        <th scope="col ">symptoms</th>
+                        <th scope="col ">Mobile</th>
+                        <th scope="col ">Address</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for p in dischargedpatients %}
+                    <tr>
+
+                        <td>
+
+                            <strong>{{p.patientName}}</strong>
+                        </td>
+                        <td>
+                            <div class="d-flex align-items-center nowrap text-primary ">
+                                <span class="icofont-ui "></span>{{p.admitDate}}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="d-flex align-items-center nowrap text-primary ">
+                                <span class="icofont-ui "></span>{{p.releaseDate}}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="d-flex align-items-center nowrap text-primary ">
+                                <span class="icofont-ui "></span>{{p.symptoms}}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="d-flex align-items-center nowrap text-primary ">
+                                <span class="icofont-ui-cell-phone p-0 me-2 "></span>{{p.mobile}}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="d-flex align-items-center nowrap text-primary ">
+                                <span class="icofont-ui-cell-phone p-0 me-2 "></span>{{p.classification}}
+                            </div>
+                        </td>
+
+                    </tr>
+                </tbody>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,304 @@
+<!doctype html>{% load static %}
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>MEDICAL Project Dashboard</title>
+    <meta name="author" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon -->
+    <!-- <link rel="shortcut icon" href="assets/img/favicon.ico"> -->
+    <!-- Plugins CSS -->
+    <link rel="stylesheet" href="{% static '/assets/css/bootstrap/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static '/assets/css/icofont.min.css' %}">
+    <link rel="stylesheet" href="{% static '/assets/css/simple-line-icons.css' %}">
+    <link rel="stylesheet" href="{% static '/assets/css/jquery.typeahead.css' %}">
+    <link rel="stylesheet" href="{% static '/assets/css/datatables.min.css' %}">
+    <link rel="stylesheet" href="{% static '/assets/css/bootstrap-select.min.css' %}">
+    <link rel="stylesheet" href="{% static '/assets/css/Chart.min.css' %}">
+    <link rel="stylesheet" href="{% static '/assets/css/morris.css' %}">
+    <link rel="stylesheet" href="{% static '/assets/css/leaflet.css' %}">
+    <!-- Theme CSS -->
+    <link rel="stylesheet" href="{% static '/assets/css/style.css' %}">
+    <style media="screen">
+        a:link {
+            text-decoration: none;
+        }
+        
+        .note {
+            text-align: center;
+            height: 80px;
+            background: -webkit-linear-gradient(left, #0072ff, #8811c5);
+            color: #fff;
+            font-weight: bold;
+            line-height: 80px;
+        }
+        
+        .form-content {
+            padding: 5%;
+            border: 1px solid #ced4da;
+            margin-bottom: 2%;
+        }
+        
+        .form-control {
+            border-radius: 1.5rem;
+        }
+        
+        .btnSubmit {
+            border: none;
+            border-radius: 1.5rem;
+            padding: 1%;
+            width: 20%;
+            cursor: pointer;
+            background: #0062cc;
+            color: #fff;
+        }
+        
+        .menu {
+            top: 50px;
+        }
+    </style>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+</head>
+
+<body class="vertical-layout boxed">
+    <div class="app-loader main-loader">
+        <div class="loader-box">
+            <div class="bounceball"></div>
+            <div class="text">Medical Centre project<span>Linet</span></div>
+        </div>
+    </div>
+    <!-- .main-loader -->
+    <div class="page-box">
+        <div class="app-container">
+            <!-- Horizontal navbar -->
+            <div id="navbar1" class="app-navbar horizontal">
+                <div class="navbar-wrap">
+                    <button class="no-style navbar-toggle navbar-open d-lg-none">
+            <span></span><span></span><span></span>
+          </button>
+                    <form class="app-search d-none d-md-block">
+                        <div class="form-group typeahead__container with-suffix-icon mb-0">
+                            <div class="typeahead__field">
+                                <div class="typeahead__query">
+                                    <input class="form-control autocomplete-control topbar-search" type="search" placeholder="Type page's title" autocomplete="off" data-source="../assets/data/search-menu.json">
+                                    <div class="suffix-icon icofont-search"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="app-actions">
+                        <div class="dropdown item">
+                            <button class="no-style dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-bs-offset="0, 12">
+                <span class="icon icofont-notification"></span>
+                <span class="badge badge-danger badge-sm"></span>
+              </button>
+                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-w-280">
+                                <div class="menu-header">
+                                    <h4 class="h5 menu-title mt-0 mb-0">Notifications</h4>
+                                    <a href="#" class="text-danger">Clear All</a>
+                                </div>
+                                <ul class="list">
+                                    <!-- <li>
+                                        <a href="#">
+                                            <span class="icon icofont-heart"></span>
+                                            <div class="content">
+                                                <span class="desc">Sara Crouch liked your photo</span>
+                                                <span class="date">17 minutes ago</span>
+                                            </div>
+                                        </a>
+                                    </li> -->
+
+                                </ul>
+                                <div class="menu-footer">
+                                    <button class="btn btn-primary w-100">
+                    View all notifications
+                    <span class="btn-icon ms-2 icofont-tasks-alt"></span>
+                  </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dropdown item">
+                            <button class="no-style dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-bs-offset="0, 10">
+                <span class="d-flex align-items-center">
+                    <img src="{% static patient.profile_pic.url %}" alt="" width="40" height="40" class="rounded-500 me-1">
+                  <i class="icofont-simple-down"></i>
+                </span>
+              </button>
+                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-w-180">
+                                <ul class="list">
+
+                                    <li>
+                                        <a class="align-items-center">
+                                            <span class="icon icofont-ui-user"></span>{{request.user.first_name}}
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="align-items-center">
+                                            <span class="icon icofont-ui-calendar"></span> Calendar
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="align-items-center">
+                                            <span class="icon icofont-ui-settings"></span> Settings
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/logout" class="align-items-center">
+                                            <span class="icon icofont-logout"></span> Log Out
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="navbar-skeleton horizontal">
+                        <div class="left-part d-flex align-items-center">
+                            <span class="navbar-button bg animated-bg d-lg-none"></span>
+                            <span class="sk-logo bg animated-bg d-none d-lg-block"></span>
+                            <span class="search d-none d-md-block bg animated-bg"></span>
+                        </div>
+                        <div class="right-part d-flex align-items-center">
+                            <div class="icon-box">
+                                <span class="icon bg animated-bg"></span>
+                                <span class="badge"></span>
+                            </div>
+                            <span class="avatar bg animated-bg"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end Horizontal navbar -->
+            <!-- Vertical navbar -->
+            <div id="navbar2" class="app-navbar vertical">
+                <div class="navbar-wrap">
+                    <button class="no-style navbar-toggle navbar-close icofont-close-line d-lg-none"></button>
+                    <div class="app-logo">
+                        <div class="logo-wrap">
+                            <!-- Image logo -->
+                            <div>
+                                <button class="btn btn-primary">
+                      <span class="btn-icon icofont-nurse"> </span>
+                      {{request.user.first_name}}
+                    </button>
+
+                            </div>
+                            <BR></BR>
+
+                        </div>
+                    </div>
+                    <div class="main-menu">
+                        <nav class="main-menu-wrap">
+                            <ul class="menu-ul">
+                                <li class="menu-item">
+                                    <span class="group-title">{{request.user.first_name}}'s DASHBOARD</span>
+                                </li>
+                                <li class="menu-item">
+                                    <a class="item-link" href="/patient-dashboard">
+                                        <span class="link-icon icofont-thermometer-alt"></span>
+                                        <span class="link-text">Dashboard</span>
+                                    </a>
+                                </li>
+
+                                <li class="menu-item">
+                                    <a class="item-link" href="/patient-appointment">
+                                        <span class="link-icon icofont-nurse"></span>
+                                        <span class="link-text">Schedule Visit</span>
+                                    </a>
+                                </li>
+                                <li class="menu-item">
+                                    <a class="item-link" href="/patient-discharge ">
+                                        <span class="link-icon icofont-paralysis-disability "></span>
+                                        <span class="link-text ">Discharge</span>
+                                    </a>
+                                </li>
+
+
+                            </ul>
+                        </nav>
+                    </div>
+
+
+                    <div class="navbar-skeleton vertical ">
+                        <div class="top-part ">
+                            <div class="sk-logo bg animated-bg "></div>
+                            <div class="sk-menu ">
+                                <span class="sk-menu-item menu-header bg-1 animated-bg "></span>
+                                <span class="sk-menu-item bg animated-bg w-75 "></span>
+                                <span class="sk-menu-item bg animated-bg w-80 "></span>
+                                <span class="sk-menu-item bg animated-bg w-50 "></span>
+                                <span class="sk-menu-item bg animated-bg w-75 "></span>
+                                <span class="sk-menu-item bg animated-bg w-50 "></span>
+                                <span class="sk-menu-item bg animated-bg w-60 "></span>
+                            </div>
+                            <div class="sk-menu ">
+                                <span class="sk-menu-item menu-header bg-1 animated-bg "></span>
+                                <span class="sk-menu-item bg animated-bg w-60 "></span>
+                                <span class="sk-menu-item bg animated-bg w-40 "></span>
+                                <span class="sk-menu-item bg animated-bg w-60 "></span>
+                                <span class="sk-menu-item bg animated-bg w-40 "></span>
+                                <span class="sk-menu-item bg animated-bg w-40 "></span>
+                                <span class="sk-menu-item bg animated-bg w-40 "></span>
+                                <span class="sk-menu-item bg animated-bg w-40 "></span>
+                            </div>
+                            <div class="sk-menu ">
+                                <span class="sk-menu-item menu-header bg-1 animated-bg "></span>
+                                <span class="sk-menu-item bg animated-bg w-60 "></span>
+                                <span class="sk-menu-item bg animated-bg w-50 "></span>
+                            </div>
+                            <div class="sk-button animated-bg w-90 "></div>
+                        </div>
+                        <div class="bottom-part ">
+                            <div class="sk-menu ">
+                                <span class="sk-menu-item bg-1 animated-bg w-60 "></span>
+                                <span class="sk-menu-item bg-1 animated-bg w-80 "></span>
+                            </div>
+                        </div>
+                        <div class="horizontal-menu ">
+                            <span class="sk-menu-item bg animated-bg "></span>
+                            <span class="sk-menu-item bg animated-bg "></span>
+                            <span class="sk-menu-item bg animated-bg "></span>
+                            <span class="sk-menu-item bg animated-bg "></span>
+                            <span class="sk-menu-item bg animated-bg "></span>
+                            <span class="sk-menu-item bg animated-bg "></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end Vertical navbar -->
+            <main class="main-content ">
+                <div class="app-loader "><i class="icofont-spinner-alt-4 rotate "></i></div>
+                <div class="main-content-wrap ">
+                    <div class="page-content ">
+                        {%block content%} {%endblock content%}
+                    </div>
+                </div>
+            </main>
+
+            <div class="content-overlay "></div>
+        </div>
+    </div>
+
+
+    <script src="{% static '/assets/js/jquery-3.6.0.min.js' %} "></script>
+    <script src="{% static '/assets/js/jquery-migrate-1.4.1.min.js' %} "></script>
+    <script src="{% static '/assets/js/popper.min.js' %} "></script>
+    <script src="{% static '/assets/js/bootstrap.min.js' %} "></script>
+    <script src="{% static '/assets/js/jquery.typeahead.min.js' %} "></script>
+    <script src="{% static '/assets/js/datatables.min.js' %} "></script>
+    <script src="{% static '/assets/js/bootstrap-select.min.js' %} "></script>
+    <script src="{% static '/assets/js/jquery.barrating.min.js' %} "></script>
+    <script src="{% static '/assets/js/Chart.min.js' %} "></script>
+    <script src="{% static '/assets/js/raphael-min.js' %} "></script>
+    <script src="{% static '/assets/js/morris.min.js' %} "></script>
+    <script src="{% static '/assets/js/echarts.min.js' %} "></script>
+    <script src="{% static '/assets/js/echarts-gl.min.js' %} "></script>
+    <script src="{% static '/assets/js/main.js' %} "></script>
+
+</body>
+
+</html>

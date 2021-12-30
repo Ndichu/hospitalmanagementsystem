@@ -1,0 +1,43 @@
+ {% extends 'hospital/receptionist_base.html' %}{% load static %} {% block content %}{% load widget_tweaks %}
+<form method="post ">
+    {% csrf_token %}
+    <div class="container register-form ">
+        <div class="form ">
+            <div class="note ">
+                <p>Book Schedule visit</p>
+            </div>
+            <div class="form-content ">
+                <div class="row ">
+                    <div class="col-md-12 ">
+                        <div class="form-group ">
+                            {% render_field appointmentForm.description class="form-control " placeholder="Description " %}
+                        </div>
+                        <div class="form-group ">
+                            {% render_field appointmentForm.doctorId class="form-control " placeholder="doctor " %}
+                        </div>
+                        <div class="form-group ">
+                            {% render_field appointmentForm.patientId class="form-control " placeholder="patient " %}
+                        </div>
+                        <div class="form-group ">
+                            <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
+                                <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1" />
+                                <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+                <button type="submit " class="btnSubmit ">Book Now!</button>
+            </div>
+        </div>
+    </div>
+</form>
+<script>
+    $(function() {
+        $("#datetimepicker1").datetimepicker();
+    });
+</script>
+{% endblock content %}

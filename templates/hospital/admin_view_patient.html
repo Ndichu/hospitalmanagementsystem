@@ -1,0 +1,37 @@
+{% extends 'hospital/receptionist_base.html' %}{% load static %} {% block content %}{% load widget_tweaks %}
+
+
+<div class="container">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h6 class="panel-title">Patient</h6>
+        </div>
+        <table class="table table-hover" id="dev-table">
+            <thead>
+                <tr>
+                    <th>PatientName</th>
+                    <th>Profile Picture</th>
+                    <th>Patient last recorded Symptoms</th>
+                    <th>Patient Address</th>
+                    <th>Patient type</th>
+                    <th>Patient Mobile</th>
+                    <th>Update</th>
+                </tr>
+            </thead>
+            {% for p in patients %}
+            <tr>
+                <td> {{p.get_name}}</td>
+                <td> <img src="{% static p.profile_pic.url %}" alt="Profile Pic" height="40px" width="40px" /></td>
+                <td>{{p.symptoms}}</td>
+                <td>{{p.address}}</td>
+                <td>{{p.classification}}</td>
+                <td>{{p.mobile}}</td>
+                <td><a class="btn btn-primary btn-xs" href="{% url 'update-patient' p.id  %}"><span class="glyphicon glyphicon-edit"></span></a></td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+
+
+{% endblock content %}

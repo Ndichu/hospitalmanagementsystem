@@ -1,0 +1,104 @@
+{% extends 'hospital/patient_base.html' %}{% load static %} {% block content %}{% load widget_tweaks %}
+
+<div class="row ">
+    <div class="col col-12 col-md-6 col-xl-4 ">
+        <div class="card animated fadeInUp delay-03s bg-light ">
+            <div class="card-body ">
+                <div class="row align-items-center ">
+                    <div class="col col-5 ">
+                        <div class="icon p-0 fs-48 text-primary opacity-50 icofont-doctor "></div>
+                    </div>
+                    <div class="col col-7 ">
+                        <h6 class="mt-0 mb-1 ">Doctor's Name</h6>
+                        <div class="count text-primary fs-20 ">{{doctorName}}</div>
+                        <p>{{request.user.first_name}}'s Doctors Name</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col col-12 col-md-6 col-xl-4 ">
+        <div class="card animated fadeInUp delay-01s bg-light ">
+            <div class="card-body ">
+                <div class="row align-items-center ">
+                    <div class="col col-5 ">
+                        <div class="icon p-0 fs-48 text-primary opacity-50 icofont-first-aid-alt "></div>
+                    </div>
+                    <div class="col col-7 ">
+                        <h6 class="mt-0 mb-1 ">Your Doctor's contact</h6>
+                        <div class="count text-primary fs-20 ">{{doctorMobile}}</div>
+                        <p>Contact Dr.{{doctorName}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col col-12 col-md-6 col-xl-4 ">
+        <div class="card animated fadeInUp delay-01s bg-light ">
+            <div class="card-body ">
+                <div class="row align-items-center ">
+                    <div class="col col-5 ">
+                        <div class="icon p-0 fs-48 text-primary opacity-50 icofont-first-aid-alt "></div>
+                    </div>
+                    <div class="col col-7 ">
+                        <h6 class="mt-0 mb-1 ">Your Doctor's address</h6>
+                        <div class="count text-primary fs-20 ">{{doctorAddress}}</div>
+                        <p>Dr.{{doctorName}}'s oparation zone</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col col-12 col-md-6 col-xl-4 ">
+        <div class="card animated fadeInUp delay-01s bg-light ">
+            <div class="card-body ">
+                <div class="row align-items-center ">
+                    <div class="col col-5 ">
+                        <div class="icon p-0 fs-48 text-primary opacity-50 icofont-ui-calendar "></div>
+                    </div>
+                    <div class="col col-7 ">
+                        <h6 class="mt-0 mb-1 ">Your Admission date</h6>
+                        <div class="count text-primary fs-20 ">{{admitDate}}</div>
+                        <p>Your Date of Admission</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col col-12 col-md-6 col-xl-4 ">
+        <div class="card animated fadeInUp delay-01s bg-light ">
+            <div class="card-body ">
+                <div class="row align-items-center ">
+                    <div class="col col-5 ">
+                        <div class="icon p-0 fs-48 text-primary opacity-50 icofont-first-aid-alt "></div>
+                    </div>
+                    <div class="col col-7 ">
+                        <h6 class="mt-0 mb-1 ">Doctor's Department</h6>
+                        <div class="count text-primary fs-20 ">{{doctorDepartment}}</div>
+                        <p>Dr.{{doctorName}}'s Department </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col col-12 col-md-6 col-xl-4 ">
+        <div class="card animated fadeInUp delay-02s bg-light ">
+            <div class="card-body ">
+                <div class="row align-items-center ">
+                    <div class="col col-5 ">
+                        <div class="icon p-0 fs-48 text-primary opacity-50 icofont-wheelchair "></div>
+                    </div>
+                    <div class="col col-7 ">
+                        <h6 class="mt-0 mb-1 ">Patient'Symptoms</h6>
+                        <div class="count text-primary fs-20 ">{{symptoms}}</div>
+                        <p>Latest recorded symptoms</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,51 @@
+{% extends 'hospital/receptionist_base.html' %}{% load static %} {% block content %}{% load widget_tweaks %}
+
+
+<div class="card mb-0 ">
+    <div class="card-header ">
+        Discharge Patient
+    </div>
+    <div class="card-body ">
+        <div class="table-responsive ">
+            <table class="table table-hover ">
+                <thead>
+                    <tr>
+                        <th scope="col ">Profile </th>
+                        <th scope="col ">Name</th>
+                        <th scope="col ">Symptoms</th>
+                        <th scope="col ">Contacts</th>
+                        <th scope="col ">Discharge</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for p in patients %}
+                    <tr>
+                        <td> <img src="{% static p.profile_pic.url %} " alt="Profile Pic " height="40px " width="40px " /></td>
+
+                        <td>
+
+                            <strong>{{p.get_name}}</strong>
+                        </td>
+                        <td>
+                            <div class="d-flex align-items-center nowrap text-primary ">
+                                <span class="icofont-ui "></span>{{p.symptoms}}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="d-flex align-items-center nowrap text-primary ">
+                                <span class="icofont-ui-cell-phone p-0 me-2 "></span>{{p.mobile}}
+                            </div>
+                        </td>
+                        <td>
+                            <a class="btn btn-primary btn-xs " href="{% url 'discharge-patient' p.id %} "><span class="glyphicon glyphicon-log-out "></span></a>
+                        </td>
+
+                    </tr>
+                </tbody>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock content %}

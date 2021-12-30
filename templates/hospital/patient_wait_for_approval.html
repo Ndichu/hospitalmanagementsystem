@@ -1,0 +1,13 @@
+{% extends 'hospital/patient_base.html' %}{% load static %} {% block content %}{% load widget_tweaks %}
+
+<div class="jumbotron" style="margin-top: 0px;
+    margin-bottom: 0px;">
+    <h1 class="display-4">Hello {{request.user.first_name}}</h1>
+    <p class="lead">Your Account is not approved till now <br><br>Our Receptionist is validating your profile <br><br> Soon our doctorss will see you !!!</p>
+    <hr class="my-4">
+    <p>Visit Dashboard</p>
+    <p class="lead">
+        <a class="btn btn-primary btn-lg" href="/patient-dashboard" role="button">{{request.user.first_name}}: Dashboard</a>
+    </p>
+</div>
+{% endblock content %}

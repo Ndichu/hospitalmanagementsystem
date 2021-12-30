@@ -1,0 +1,40 @@
+{% extends 'hospital/doctorbase.html' %}{% load static %} {% block content %}{% load widget_tweaks %}
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="container register-form">
+        <div class="form">
+            <div class="note">
+                <p>Update and transfer Patient Details</p>
+            </div>
+            <div class="form-content">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            {% render_field userForm.first_name class="form-control" placeholder="First Name" %}
+                        </div>
+
+
+                        <div class="form-group">
+                            {% render_field patientForm.symptoms class="form-control" placeholder="Symptoms" %}
+                        </div>
+
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            {% render_field userForm.last_name class="form-control" placeholder="Last Name" %}
+                        </div>
+
+                        <div class="form-group">
+                            {% render_field patientForm.assignedDoctorId class="form-control" placeholder="Doctor" %}
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btnSubmit">Transfer</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+{% endblock content %}

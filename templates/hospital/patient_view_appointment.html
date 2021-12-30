@@ -1,0 +1,53 @@
+{% extends 'hospital/patient_base.html' %}{% load static %} {% block content %}{% load widget_tweaks %}
+
+<div class="card mb-0 ">
+    <div class="card-header ">
+        Your Scheduled Visits
+    </div>
+    <div class="card-body ">
+        <div class="table-responsive ">
+            <table class="table table-hover ">
+                <thead>
+                    <tr>
+
+                        <th scope="col ">Doctor Name</th>
+                        <th scope="col ">Description</th>
+                        <th scope="col ">Date</th>
+                        <th scope="col ">Status</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for a in appointments %}
+                    <tr>
+
+                        <td>
+
+                            <strong>{{a.doctorName}}</strong>
+
+                        </td>
+                        <td>
+                            <div class="d-flex align-items-center nowrap text-primary ">
+                                <span class="icofont-info-circle"></span>{{a.description}}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="d-flex align-items-center nowrap text-primary ">
+                                <span class="icofont-ui-calendar p-0 me-2 "></span> {{a.appointmentDate}}
+                            </div>
+                        </td>
+                        {%if a.status%}
+                        <td> <span class="label label-primary">Confirmed</span></td>
+                        {% else %}
+                        <td> <span class="label label-success">Pending</span></td>
+                        {% endif %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
