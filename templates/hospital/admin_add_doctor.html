@@ -18,12 +18,10 @@
                         <div class="form-group">
                             {% render_field doctorForm.department class="form-control" placeholder="Department" %}
                         </div>
+
                         <div class="form-group">
                             {% render_field doctorForm.address class="form-control" placeholder="Address" %}
                         </div>
-
-                    </div>
-                    <div class="col-md-6">
                         <div class="form-group">
                             {% render_field userForm.last_name class="form-control" placeholder="Last Name" %}
                         </div>
@@ -36,6 +34,31 @@
                         <div class="form-group">
                             {% render_field doctorForm.profile_pic required="required" class="form-control" placeholder="Profile Picture" %}
                         </div>
+
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            {% render_field doctorForm.mondays class="form-control" placeholder="Day Avaliable" %}
+                        </div>
+                        <div class="form-group">
+                            {% render_field doctorForm.tuesdays class="form-control" placeholder="Day Avaliable" %}
+                        </div>
+                        <div class="form-group">
+                            {% render_field doctorForm.wednesdays class="form-control" placeholder="Day Avaliable" %}
+                        </div>
+                        <div class="form-group">
+                            {% render_field doctorForm.thursdays class="form-control" placeholder="Day Avaliable" %}
+                        </div>
+                        <div class="form-group">
+                            {% render_field doctorForm.fridays class="form-control" placeholder="Day Avaliable" %}
+                        </div>
+                        <div class="form-group">
+                            {% render_field doctorForm.saturdays class="form-control" placeholder="Day Avaliable" %}
+                        </div>
+                        <div class="form-group">
+                            {% render_field doctorForm.sundays class="form-control" placeholder="Day Avaliable" %}
+                        </div>
+
                     </div>
                 </div>
                 <button type="submit" class="btnSubmit">Register</button>

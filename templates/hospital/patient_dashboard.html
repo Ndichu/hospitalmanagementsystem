@@ -1,5 +1,72 @@
 {% extends 'hospital/patient_base.html' %}{% load static %} {% block content %}{% load widget_tweaks %}
+<div class="card mb-0 ">
+    <div class="card-header ">
+        Doctors availability
+    </div>
+    <div class="card-body ">
+        <div class="table-responsive ">
+            <table class="table table-hover ">
+                <thead>
+                    <tr>
+                        <th scope="col ">Monday</th>
+                        <th scope="col ">Tuesday</th>
+                        <th scope="col ">Wednesday</th>
+                        <th scope="col ">Thursday</th>
+                        <th scope="col ">Friday</th>
+                        <th scope="col ">Saturday</th>
+                        <th scope="col ">Sunday</th>
+                    </tr>
+                </thead>
 
+                <tbody>
+
+                    <tr>
+
+                        <td>
+                            <div class="d-flex align-items-center nowrap text-primary ">
+                                <span class="icofont-ui "></span>{{doctorMondays}}
+                            </div>
+                        </td>
+
+                        <td>
+                            <div class="d-flex align-items-center nowrap text-primary ">
+                                <span class="icofont-ui "></span>{{doctorTuesdays}}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="d-flex align-items-center nowrap text-primary ">
+                                <span class="icofont-ui "></span>{{doctorWednesdays}}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="d-flex align-items-center nowrap text-primary ">
+                                <span class="icofont-ui "></span>{{doctorThursdays}}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="d-flex align-items-center nowrap text-primary ">
+                                <span class="icofont-ui-cell-phone p-0 me-2 "></span>{{doctorFridays}}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="d-flex align-items-center nowrap text-primary ">
+                                <span class="icofont-ui-cell-phone p-0 me-2 "></span>{{doctorSaturdays}}
+                            </div>
+                        </td>
+
+                        <td>
+                            <div class="d-flex align-items-center nowrap text-primary ">
+                                <span class="icofont-ui-cell-phone p-0 me-2 "></span>{{doctorSundays}}
+                            </div>
+                        </td>
+
+                    </tr>
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+</div><br><br><br><br>
 <div class="row ">
     <div class="col col-12 col-md-6 col-xl-4 ">
         <div class="card animated fadeInUp delay-03s bg-light ">
@@ -82,6 +149,22 @@
             </div>
         </div>
     </div>
+    <div class="col col-12 col-md-6 col-xl-4 ">
+        <div class="card animated fadeInUp delay-01s bg-light ">
+            <div class="card-body ">
+                <div class="row align-items-center ">
+                    <div class="col col-5 ">
+                        <div class="icon p-0 fs-48 text-primary opacity-50 icofont-first-aid-alt "></div>
+                    </div>
+                    <div class="col col-7 ">
+                        <h6 class="mt-0 mb-1 ">Doctor's Availability on monday</h6>
+                        <div class="count text-primary fs-20 ">{{doctorMondays}}</div>
+                        <p>Dr.{{doctorName}} </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="col col-12 col-md-6 col-xl-4 ">
         <div class="card animated fadeInUp delay-02s bg-light ">
@@ -99,6 +182,8 @@
             </div>
         </div>
     </div>
+
 </div>
+
 
 {% endblock content %}

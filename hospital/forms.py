@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
+from django.forms.widgets import TextInput
 from . import models
 
 
@@ -27,7 +28,7 @@ class DoctorUserForm(forms.ModelForm):
 class DoctorForm(forms.ModelForm):
     class Meta:
         model=models.Doctor
-        fields=['address','mobile','department','status','profile_pic']
+        fields=['address','mobile','department','status','profile_pic','mondays','tuesdays','wednesdays','thursdays','fridays','saturdays','sundays']
 
 
 
@@ -56,8 +57,8 @@ class AppointmentForm(forms.ModelForm):
     
     class Meta:
         model=models.Appointment
-        fields=['description','status','doctor_time_slots']
-
+        fields=['description','status']
+        
 
 
 
@@ -66,12 +67,4 @@ class PatientAppointmentForm(forms.ModelForm):
     class Meta:
         model=models.Appointment
         fields=['description','status']
-
-
-#for contact us page
-class ContactusForm(forms.Form):
-    Name = forms.CharField(max_length=30)
-    Email = forms.EmailField()
-    Message = forms.CharField(max_length=500,widget=forms.Textarea(attrs={'rows': 3, 'cols': 30}))
-
 

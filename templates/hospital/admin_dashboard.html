@@ -1,4 +1,10 @@
 {% extends 'hospital/receptionist_base.html' %}{% load static %} {% block content %}{% load widget_tweaks %}
+<style>
+    input {
+        float: right;
+        text-align: right;
+    }
+</style>
 <div class="row ">
     <div class="col col-12 col-md-6 col-xl-4 ">
         <div class="card animated fadeInUp delay-03s bg-light ">
@@ -49,7 +55,79 @@
         </div>
     </div>
 </div>
+<br>
+<div style="overflow: auto;">
+    <center>
+        <h1>Doctors calender of appointments</h1><br><br>TIME {{time}}<br><br> {{ cal|safe }}<br> Copyright © {{ current_year }}
+    </center>
+</div>
+
+<br>
+
+<div class="card mb-0 ">
+
+
+    <div class="card-header ">
+        Appointments This month
+
+    </div>
+    <div>
+
+    </div>
+    <div class="card-body ">
+
+
+        <div class="table-responsive ">
+            <form method="POST">
+                {% csrf_token %}
+
+                <table class="table table-hover ">
+                    <thead>
+                        <tr>
+                            <th scope="col ">The Doctor's name</th>
+                            <th scope="col ">Patients's Name</th>
+                            <th scope="col ">Description</th>
+                            <th scope="col ">Appointment Date</th>
+
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% if appointments_list %} {% for appointment in appointments_list %}
+                        <tr>
+                            <td>
+                                <div class="d-flex align-items-center nowrap text-primary ">
+                                    <span class="icofont-doctor-alt p-0 me-2 "></span>{{ appointment.doctorName }}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="d-flex align-items-center nowrap text-primary ">
+                                    <span class="icofont-wheelchair p-0 me-2 "></span>{{ appointment.patientName }}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="d-flex align-items-center nowrap text-primary ">
+                                    <span class="icofont-attachment p-0 me-2 "></span> {{ appointment.description }}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="d-flex align-items-center nowrap text-primary ">
+                                    <span class="icofont-calendar p-0 me-2 "></span>{{appointment.appointmentDate}}
+                                </div>
+                            </td>
+
+                        </tr>
+                    </tbody>
+                    {% endfor %}
+                </table>
+            </form>
+            {% else %}
+            <h3 style="text-align: center;"> <span class="icofont-sad p-0 me-2 "></span>There are no Appointments This month... </h3>{% endif %}
+        </div>
+    </div>
+</div>
 <br><br><br>
+
 <div class="card mb-0 ">
     <div class="card-header ">
         Recent Doctors
@@ -59,9 +137,10 @@
             <table class="table table-hover ">
                 <thead>
                     <tr>
-
+                        <th scope="col ">Doctor Id</th>
                         <th scope="col ">Profile</th>
-                        <th scope="col ">Name</th>
+                        <th scope="col ">UserName</th>
+                        <th scope="col ">Names</th>
                         <th scope="col ">Department</th>
                         <th scope="col ">Contacts</th>
                         <th scope="col ">Status</th>
@@ -71,8 +150,18 @@
                 <tbody>
                     {% for d in doctors %}
                     <tr>
+                        <td>
+                            <div class="d-flex align-items-center nowrap text-primary ">
+                                <span class="icofont-ui "></span>{{d.id}}
+                            </div>
+                        </td>
                         <td> <img src="{% static d.profile_pic.url %} " alt="Profile Pic " height="40px " width="40px " /></td>
 
+                        <td>
+
+                            <strong>{{d.user}}</strong>
+
+                        </td>
                         <td>
 
                             <strong>{{d.get_name}}</strong>
@@ -80,7 +169,164 @@
                         </td>
                         <td>
                             <div class="d-flex align-items-center nowrap text-primary ">
-                                <span class="icofont-ui "></span>{{d.department}}
+                                <span class="icofont-building-alt "></span>{{d.department}}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="d-flex align-items-center nowrap text-primary ">
+                                <span class="icofont-ui-cell-phone p-0 me-2 "></span> {{d.mobile}}
+                            </div>
+                        </td>
+                        {%if d.status%}
+                        <td>
+                            <div class="actions ">
+                                <button class="btn btn-info btn-sm btn-square rounded-pill ">
+                          <span class="btn-icon icofont-ui ">admitted</span>
+                        </button> {% else %} {% endif %}
+                            </div>
+                        </td>
+
+                    </tr>
+                </tbody>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
+<br><br><br>
+<div class="card mb-0 ">
+    <div class="card-header ">
+        <span class="icon icofont-ui-calendar"></span> Doctor's week schedule
+    </div>
+    <div class="card-body ">
+        <div class="table-responsive ">
+            <table class="table table-hover ">
+                <thead>
+                    <tr>
+
+                        <th scope="col ">Name</th>
+                        <th scope="col ">Profile Picture</th>
+                        <th scope="col ">Mobile</th>
+                        <th scope="col ">Department</th>
+                        <th scope="col ">Monday</th>
+                        <th scope="col ">Tuesday</th>
+                        <th scope="col ">Wednesday</th>
+                        <th scope="col ">Thursday</th>
+                        <th scope="col ">Friday</th>
+                        <th scope="col ">Saturday</th>
+                        <th scope="col ">Sunday</th>
+
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for d in doctors %}
+
+                    <tr>
+
+                        <td>
+
+                            <strong>{{d.get_name}}</strong>
+
+                        </td>
+                        <td> <img src="{% static d.profile_pic.url %} " alt="Profile Pic " height="40px " width="40px " /></td>
+                        <td>
+                            <div class="d-flex align-items-center nowrap text-primary ">
+                                <span class="icofont-ui "></span>{{d.mobile}}
+                            </div>
+                        </td>
+
+                        <td>
+                            <div class="d-flex align-items-center nowrap text-primary ">
+                                <span class="icofont-building-alt p-0 me-2 "></span>{{d.department}}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="d-flex align-items-center nowrap text-primary ">
+                                <span class="icofont-clock-time p-0 me-2 "></span>{{d.mondays}}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="d-flex align-items-center nowrap text-primary ">
+                                <span class="icofont-clock-time p-0 me-2 "></span>{{d.tuesdays}}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="d-flex align-items-center nowrap text-primary ">
+                                <span class="icofont-clock-time p-0 me-2 "></span>{{d.wednesdays}}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="d-flex align-items-center nowrap text-primary ">
+                                <span class="icofont-clock-time p-0 me-2 "></span>{{d.thursdays}}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="d-flex align-items-center nowrap text-primary ">
+                                <span class="icofont-clock-time p-0 me-2 "></span>{{d.fridays}}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="d-flex align-items-center nowrap text-primary ">
+                                <span class="icofont-clock-time p-0 me-2 "></span>{{d.saturdays}}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="d-flex align-items-center nowrap text-primary ">
+                                <span class="icofont-clock-time p-0 me-2 "></span>{{d.sundays}}
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
+<br><br><br>
+
+<div class="card mb-0 ">
+    <div class="card-header ">
+        Recent Doctors
+    </div>
+    <div class="card-body ">
+        <div class="table-responsive ">
+            <table class="table table-hover ">
+                <thead>
+                    <tr>
+                        <th scope="col ">Doctor Id</th>
+                        <th scope="col ">Profile</th>
+                        <th scope="col ">UserName</th>
+                        <th scope="col ">Names</th>
+                        <th scope="col ">Department</th>
+                        <th scope="col ">Contacts</th>
+                        <th scope="col ">Status</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for d in doctors %}
+                    <tr>
+                        <td>
+                            <div class="d-flex align-items-center nowrap text-primary ">
+                                <span class="icofont-ui "></span>{{d.id}}
+                            </div>
+                        </td>
+                        <td> <img src="{% static d.profile_pic.url %} " alt="Profile Pic " height="40px " width="40px " /></td>
+
+                        <td>
+
+                            <strong>{{d.user}}</strong>
+
+                        </td>
+                        <td>
+
+                            <strong>{{d.get_name}}</strong>
+
+                        </td>
+                        <td>
+                            <div class="d-flex align-items-center nowrap text-primary ">
+                                <span class="icofont-building-alt "></span>{{d.department}}
                             </div>
                         </td>
                         <td>
@@ -114,11 +360,13 @@
             <table class="table table-hover ">
                 <thead>
                     <tr>
-
+                        <th scope="col ">Patient ID</th>
                         <th scope="col ">Profile</th>
-                        <th scope="col ">Name</th>
+                        <th scope="col ">UserName</th>
+                        <th scope="col ">Names</th>
                         <th scope="col ">Type</th>
                         <th scope="col ">Symptoms</th>
+                        <th scope="col ">Admission date</th>
                         <th scope="col ">Contacts</th>
                         <th scope="col ">Address</th>
                         <th scope="col ">Status</th>
@@ -128,15 +376,24 @@
                 <tbody>
                     {% for p in patients %}
                     <tr>
+
+                        <td>
+
+                            <strong>{{p.id}}</strong>
+                        </td>
                         <td> <img src="{% static p.profile_pic.url %} " alt="Profile Pic " height="40px " width="40px " /></td>
 
+                        <td>
+
+                            <strong>{{p.user}}</strong>
+                        </td>
                         <td>
 
                             <strong>{{p.get_name}}</strong>
                         </td>
                         <td>
                             <div class="d-flex align-items-center nowrap text-primary ">
-                                <span class="icofont-ui "></span>{{p.classification}}
+                                <span class="icofont-chart-flow-1 "></span>{{p.classification}}
                             </div>
                         </td>
                         <td>
@@ -146,12 +403,17 @@
                         </td>
                         <td>
                             <div class="d-flex align-items-center nowrap text-primary ">
+                                <span class="icofont-ui "></span>{{p.admitDate}}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="d-flex align-items-center nowrap text-primary ">
                                 <span class="icofont-ui-cell-phone p-0 me-2 "></span>{{p.mobile}}
                             </div>
                         </td>
                         <td>
                             <div class="d-flex align-items-center nowrap text-primary ">
-                                <span class="icofont-ui-cell-phone p-0 me-2 "></span>{{p.address}}
+                                <span class="icofont-location-pin p-0 me-2 "></span>{{p.address}}
                             </div>
                         </td>
                         {%if p.status%}
@@ -170,4 +432,4 @@
         </div>
     </div>
 </div>
-{% endblock content %}
+<br><br><br><br> {% endblock content %}

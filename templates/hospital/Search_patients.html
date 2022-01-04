@@ -1,0 +1,65 @@
+{% extends 'hospital/receptionist_base.html' %}{% load static %} {% block content %}{% load widget_tweaks %} {% if searched %}
+<h1>You searched for {{ searched }}</h1>
+
+<br><br><br>
+<div class="card mb-0 ">
+    <div class="card-header ">
+        search results Patients
+    </div>
+    <div class="card-body ">
+        <div class="table-responsive ">
+            <table class="table table-hover ">
+                <thead>
+                    <tr>
+
+                        <th scope="col ">Patient ID</th>
+                        <th scope="col ">Patient User Name & Symtom</th>
+                        <th scope="col ">Patient picture</th>
+                        <th scope="col ">Patient Mobile</th>
+                        <th scope="col ">Patient Adress</th>
+
+
+
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for patient in patients %}
+                    <tr>
+
+
+                        <td>
+                            <div class="d-flex align-items-center nowrap text-primary ">
+                                <span class="icofont-ui "></span>{{ patient.id }}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="d-flex align-items-center nowrap text-primary ">
+                                <span class="icofont-ui "></span>{{ patient }}
+                            </div>
+                        </td>
+                        <td> <img src="{% static patient.profile_pic.url %}" alt="Profile Pic" height="40px" width="40px" /></td>
+
+                        <td>
+                            <div class="d-flex align-items-center nowrap text-primary ">
+                                <span class="icofont-ui "></span>{{ patient.mobile }}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="d-flex align-items-center nowrap text-primary ">
+                                <span class="icofont-ui "></span>{{ patient.address }}
+                            </div>
+                        </td>
+
+
+
+                    </tr>
+                </tbody>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
+
+{% else %}
+<h1>Hey you forgot to type in the name of the patient</h1>{% endif %} {% endblock content %}

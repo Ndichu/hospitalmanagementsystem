@@ -1,37 +1,90 @@
 {% extends 'hospital/receptionist_base.html' %}{% load static %} {% block content %}{% load widget_tweaks %}
 
 
-<div class="container">
-    <div class="panel panel-primary">
-        <div class="panel-heading">
-            <h6 class="panel-title">Patient</h6>
+<div class="card mb-0 ">
+    <div class="card-header ">
+        Recent Patients
+    </div>
+    <div class="card-body ">
+        <div class="table-responsive ">
+            <table class="table table-hover ">
+                <thead>
+                    <tr>
+                        <th scope="col ">Patient ID</th>
+                        <th scope="col ">Admission Date</th>
+                        <th scope="col ">Profile</th>
+                        <th scope="col ">UserName</th>
+                        <th scope="col ">Names</th>
+                        <th scope="col ">Type</th>
+                        <th scope="col ">Symptoms</th>
+                        <th scope="col ">Contacts</th>
+                        <th scope="col ">Address</th>
+                        <th scope="col ">Update</th>
+                        <th scope="col ">Delete</th>
+
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for p in patients %}
+                    <tr>
+
+                        <td>
+
+                            <strong>{{p.id}}</strong>
+                        </td>
+                        <td>
+
+                            <strong>{{p.admitDate}}</strong>
+                        </td>
+                        <td> <img src="{% static p.profile_pic.url %} " alt="Profile Pic " height="40px " width="40px " /></td>
+
+                        <td>
+
+                            <strong>{{p.user}}</strong>
+                        </td>
+                        <td>
+
+                            <strong>{{p.get_name}}</strong>
+                        </td>
+                        <td>
+                            <div class="d-flex align-items-center nowrap text-primary ">
+                                <span class="icofont-chart-flow-1 "></span> {{p.classification}}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="d-flex align-items-center nowrap text-primary ">
+                                <span class="icofont-ui "></span>{{p.symptoms}}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="d-flex align-items-center nowrap text-primary ">
+                                <span class="icofont-ui-cell-phone p-0 me-2 "></span> {{p.mobile}}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="d-flex align-items-center nowrap text-primary ">
+                                <span class="icofont-location-pin p-0 me-2 "></span> {{p.address}}
+                            </div>
+                        </td>
+
+                        <td>
+                            <div class="d-flex align-items-center nowrap text-primary ">
+                                <a class="btn btn-primary btn-xs" href="{% url 'update-patient' p.id  %}"><span class="glyphicon glyphicon-edit">✔</span></a>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="d-flex align-items-center nowrap text-primary ">
+                                <a class="btn btn-danger btn-xs" href="{% url 'delete-patient-from-hospital' p.id  %}"><span class="glyphicon glyphicon-trash">✘</span></a>
+                            </div>
+                        </td>
+
+                    </tr>
+                </tbody>
+                {% endfor %}
+            </table>
         </div>
-        <table class="table table-hover" id="dev-table">
-            <thead>
-                <tr>
-                    <th>PatientName</th>
-                    <th>Profile Picture</th>
-                    <th>Patient last recorded Symptoms</th>
-                    <th>Patient Address</th>
-                    <th>Patient type</th>
-                    <th>Patient Mobile</th>
-                    <th>Update</th>
-                </tr>
-            </thead>
-            {% for p in patients %}
-            <tr>
-                <td> {{p.get_name}}</td>
-                <td> <img src="{% static p.profile_pic.url %}" alt="Profile Pic" height="40px" width="40px" /></td>
-                <td>{{p.symptoms}}</td>
-                <td>{{p.address}}</td>
-                <td>{{p.classification}}</td>
-                <td>{{p.mobile}}</td>
-                <td><a class="btn btn-primary btn-xs" href="{% url 'update-patient' p.id  %}"><span class="glyphicon glyphicon-edit"></span></a></td>
-            </tr>
-            {% endfor %}
-        </table>
     </div>
 </div>
-
-
 {% endblock content %}
+<br><br><br><br>

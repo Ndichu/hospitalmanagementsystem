@@ -1,0 +1,42 @@
+{% extends 'hospital/receptionist_base.html' %}{% load static %} {% block content %}{% load widget_tweaks %}
+
+
+<div class="card mb-0 ">
+    <div class="card-header ">
+        Scheduled visits list
+    </div>
+    <div class="card-body ">
+        <div class="table-responsive ">
+            <table class="table table-hover ">
+                <thead>
+                    <tr>
+
+                        <th scope="col ">Patient Id</th>
+                        <th scope="col ">Patient Name</th>
+
+                    </tr>
+                </thead>
+                {% for Patient in object_list %}
+                <tbody>
+
+                    <tr>
+
+
+                        <strong>{{Patient.id}}</strong>
+
+                        </td>
+                        <td>
+                            <div class="d-flex align-items-center nowrap text-primary ">
+                                <span class="icofont-ui-wheelchair "></span>{{Patient.Name}}
+                            </div>
+                        </td>
+
+
+                    </tr>
+                </tbody>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock content %}

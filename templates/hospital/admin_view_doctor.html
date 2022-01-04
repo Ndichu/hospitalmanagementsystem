@@ -11,6 +11,7 @@
                 <thead>
                     <tr>
 
+                        <th scope="col ">ID</th>
                         <th scope="col ">Name</th>
                         <th scope="col ">Profile Picture</th>
                         <th scope="col ">Mobile</th>
@@ -22,9 +23,14 @@
                 </thead>
 
                 <tbody>
-                    {% for d in doctors %}
+                    {% for d in doc_list %}
 
                     <tr>
+                        <td>
+
+                            <strong>{{d.id}}</strong>
+
+                        </td>
                         <td>
 
                             <strong>{{d.get_name}}</strong>
@@ -33,24 +39,25 @@
                         <td> <img src="{% static d.profile_pic.url %} " alt="Profile Pic " height="40px " width="40px " /></td>
                         <td>
                             <div class="d-flex align-items-center nowrap text-primary ">
-                                <span class="icofont-ui "></span>{{d.mobile}}
+                                <span class="icofont-ui-cell-phone "></span>{{d.mobile}}
                             </div>
                         </td>
                         <td>
                             <div class="d-flex align-items-center nowrap text-primary ">
-                                <span class="icofont-ui-cell-phone p-0 me-2 "></span>{{d.address}}
+                                <span class="icofont-location-pin p-0 me-2 "></span>{{d.address}}
                             </div>
                         </td>
                         <td>
                             <div class="d-flex align-items-center nowrap text-primary ">
-                                <span class="icofont-ui-cell-phone p-0 me-2 "></span>{{d.department}}
+                                <span class="icofont-building-alt p-0 me-2 "></span>{{d.department}}
                             </div>
                         </td>
+
                         <td>
-                            <a class="btn btn-primary btn-xs " href="{% url 'update-doctor' d.id %} "><span class="glyphicon glyphicon-edit "></span></a>
+                            <a class="btn btn-primary btn-xs " href="{% url 'update-doctor' d.id %} "><span class="glyphicon glyphicon-edit ">✔</span></a>
                         </td>
                         <td>
-                            <a class="btn btn-danger btn-xs " href="{% url 'delete-doctor-from-hospital' d.id %} "><span class="glyphicon glyphicon-trash "></span></a>
+                            <a class="btn btn-danger btn-xs " href="{% url 'delete-doctor-from-hospital' d.id %} "><span class="glyphicon glyphicon-trash ">✘</span></a>
                         </td>
 
                     </tr>
@@ -58,7 +65,107 @@
                 {% endfor %}
             </table>
         </div>
-    </div>
-</div>
 
-{% endblock content %}
+        <hr>{% if doc_list.has_previous %}
+        <a href="?page=1">&laquo First</a>
+        <a href="?page={{ doc_list.previous_page_number }}">Previous</a> {% endif %} Page {{ doc_list.number }} of {{ doc_list.paginator.num_pages }} {% if doc_list.has_next %}
+        <a href="?page={{ doc_list.next_page_number }}">Next</a>
+        <a href="?page={{ doc_list.paginator.num_pages }}">Last &raquo</a>{% endif %}</div>
+    </hr>
+
+    <br>
+    <br>
+    <br>
+    <div class="card mb-0 ">
+        <div class="card-header ">
+            Doctor's week schedule
+        </div>
+        <div class="card-body ">
+            <div class="table-responsive ">
+                <table class="table table-hover ">
+                    <thead>
+                        <tr>
+
+                            <th scope="col ">Name</th>
+                            <th scope="col ">Profile Picture</th>
+                            <th scope="col ">Mobile</th>
+                            <th scope="col ">Department</th>
+                            <th scope="col ">Monday</th>
+                            <th scope="col ">Tuesday</th>
+                            <th scope="col ">Wednesday</th>
+                            <th scope="col ">Thursday</th>
+                            <th scope="col ">Friday</th>
+                            <th scope="col ">Saturday</th>
+                            <th scope="col ">Sunday</th>
+
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for d in doctors %}
+
+                        <tr>
+
+                            <td>
+
+                                <strong>{{d.get_name}}</strong>
+
+                            </td>
+                            <td> <img src="{% static d.profile_pic.url %} " alt="Profile Pic " height="40px " width="40px " /></td>
+                            <td>
+                                <div class="d-flex align-items-center nowrap text-primary ">
+                                    <span class="icofont-ui-cell-phone "></span>{{d.mobile}}
+                                </div>
+                            </td>
+
+                            <td>
+                                <div class="d-flex align-items-center nowrap text-primary ">
+                                    <span class="icofont-building-alt p-0 me-2 "></span>{{d.department}}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="d-flex align-items-center nowrap text-primary ">
+                                    <span class="icofont-clock-time p-0 me-2 "></span>{{d.mondays}}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="d-flex align-items-center nowrap text-primary ">
+                                    <span class="icofont-clock-time p-0 me-2 "></span>{{d.tuesdays}}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="d-flex align-items-center nowrap text-primary ">
+                                    <span class="icofont-clock-time p-0 me-2 "></span>{{d.wednesdays}}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="d-flex align-items-center nowrap text-primary ">
+                                    <span class="icofont-clock-time p-0 me-2 "></span>{{d.thursdays}}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="d-flex align-items-center nowrap text-primary ">
+                                    <span class="icofont-clock-time p-0 me-2 "></span>{{d.fridays}}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="d-flex align-items-center nowrap text-primary ">
+                                    <span class="icofont-clock-time p-0 me-2 "></span>{{d.saturdays}}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="d-flex align-items-center nowrap text-primary ">
+                                    <span class="icofont-clock-time p-0 me-2 "></span>{{d.sundays}}
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+
+    {% endblock content%} %}

@@ -1,3 +1,4 @@
+from django.core import paginator
 from django.shortcuts import render,redirect,reverse
 from . import forms,models
 from django.db.models import Sum
@@ -7,11 +8,61 @@ from django.core.mail import send_mail
 from django.contrib.auth.decorators import login_required,user_passes_test
 from datetime import datetime,timedelta,date
 from django.conf import settings
-
+from .models import Patient, Appointment
+import calendar
+from calendar import HTMLCalendar
+from datetime import datetime
+from django.core.paginator import Paginator
 
 
 # Create your views here.
 
+
+
+
+def doctor_calendar(request, year=datetime.now().year, month=datetime.now().strftime('%B')):
+
+    month = month.capitalize()
+    month_number =list(calendar.month_name).index(month)
+    month_number =int(month_number)
+
+    cal = HTMLCalendar().formatmonth(
+        year, month_number
+    )
+    now = datetime.now()
+    current_year = now.year
+    current_month = now.month
+
+    time = now.strftime('%I:%M:%S %p')
+
+
+
+    return render(request,'hospital/calendar.html',{
+        "cal": cal,
+        "current_month": current_month,
+        "current_year": current_year,
+        "time":time,
+        })
+
+def search_patients(request):
+    if request.method == "POST":
+        searched = request.POST['searched']
+        patients = Patient.objects.filter(user__username__contains=searched)
+        return render(request,'hospital/Search_patients.html',{'searched':searched, 'patients':patients})
+    else:
+        return render(request,'hospital/Search_patients.html',{})
+
+def search_dates(request):
+    if request.method == "POST":
+        fromdate = request.POST.get('fromdate')
+        todate = request.POST.get('todate') 
+        searchresult= Appointment.objects.raw('select patientName,doctorName,description, appointmentDate from Appointment where appointmentDate between "'+fromdate+'" and "'+todate+'" ')
+        return render(request,'hospital/admin_dashboard.html',{'data': searchresult})
+    else:
+        displaydata=Appointment.objects.all()
+        return render(request,'hospital/admin_dashboard.html',{'data': displaydata})
+
+   
 
 def home_view(request):
     if request.user.is_authenticated:
@@ -26,14 +77,14 @@ def adminclick_view(request):
     return render(request,'hospital/adminclick.html')
 
 
-#for showing signup/login button for doctor(by sumit)
+#for showing signup/login button for doctor
 def doctorclick_view(request):
     if request.user.is_authenticated:
         return HttpResponseRedirect('afterlogin')
     return render(request,'hospital/doctorclick.html')
 
 
-#for showing signup/login button for patient(by sumit)
+#for showing signup/login button for patient
 def patientclick_view(request):
     if request.user.is_authenticated:
         return HttpResponseRedirect('afterlogin')
@@ -103,7 +154,7 @@ def patient_signup_view(request):
 
 
 
-#-----------for checking user is doctor , patient or admin(by sumit)
+#-----------for checking user is doctor , patient or receptionist(Admin)
 def is_admin(user):
     return user.groups.filter(name='ADMIN').exists()
 def is_doctor(user):
@@ -112,7 +163,7 @@ def is_patient(user):
     return user.groups.filter(name='PATIENT').exists()
 
 
-#---------AFTER ENTERING CREDENTIALS WE CHECK WHETHER USERNAME AND PASSWORD IS OF ADMIN,DOCTOR OR PATIENT
+#---------AFTER ENTERING CREDENTIALS WE CHECK WHETHER USERNAME AND PASSWORD IS OF RECEPTIONIST(ADMIN),DOCTOR OR PATIENT
 def afterlogin_view(request):
     if is_admin(request.user):
         return redirect('admin-dashboard')
@@ -136,11 +187,31 @@ def afterlogin_view(request):
 
 
 #---------------------------------------------------------------------------------
-#------------------------ ADMIN RELATED VIEWS START ------------------------------
+#------------------------ RECEPTIONIST(ADMIN) RELATED VIEWS START ------------------------------
 #---------------------------------------------------------------------------------
 @login_required(login_url='adminlogin')
 @user_passes_test(is_admin)
-def admin_dashboard_view(request):
+def admin_dashboard_view(request, year=datetime.now().year, month=datetime.now().strftime('%B')):
+    
+    month = month.capitalize()
+    month_number =list(calendar.month_name).index(month)
+    month_number =int(month_number)
+
+    cal = HTMLCalendar().formatmonth(
+        year, month_number
+    )
+    now = datetime.now()
+    current_year = now.year
+    current_month = now.month
+
+    appointments_list = Appointment.objects.filter(
+
+        appointmentDate__year = year, 
+        appointmentDate__month = month_number
+    )
+
+    time = now.strftime('%I:%M:%S %p')
+    
     #for both table in admin dashboard
     doctors=models.Doctor.objects.all().order_by('-id')
     patients=models.Patient.objects.all().order_by('-id')
@@ -162,11 +233,33 @@ def admin_dashboard_view(request):
     'pendingpatientcount':pendingpatientcount,
     'appointmentcount':appointmentcount,
     'pendingappointmentcount':pendingappointmentcount,
+    "cal": cal,
+    "current_month": current_month,
+    "current_year": current_year,
+    "time":time,
+    "appointments_list":appointments_list
     }
+    
     return render(request,'hospital/admin_dashboard.html',context=mydict)
 
 
-# this view for sidebar click on admin page
+# this view for sidebar click on RECEPTIONIST(ADMIN) page
+
+@login_required(login_url='Receptionistlogin')
+@user_passes_test(is_admin)
+def search_patients(request):
+    if request.method == "POST":
+        searched = request.POST['searched']
+        patients = Patient.objects.filter(id__contains=searched)
+        return render(request,'hospital/Search_patients.html',{'searched':searched, 'patients':patients})
+    else:
+        return render(request,'hospital/Search_patients.html',{})
+
+    
+
+
+
+
 @login_required(login_url='Receptionistlogin')
 @user_passes_test(is_admin)
 def admin_doctor_view(request):
@@ -178,7 +271,12 @@ def admin_doctor_view(request):
 @user_passes_test(is_admin)
 def admin_view_doctor_view(request):
     doctors=models.Doctor.objects.all().filter(status=True)
-    return render(request,'hospital/admin_view_doctor.html',{'doctors':doctors})
+
+    p = Paginator(models.Doctor.objects.all(), 7)
+    page = request.GET.get('page')
+    doc_list = p.get_page(page)
+
+    return render(request,'hospital/admin_view_doctor.html',{'doctors':doctors, 'doc_list':doc_list})
 
 
 
@@ -194,7 +292,6 @@ def delete_doctor_from_hospital_view(request,pk):
 
 
 @login_required(login_url='Receptionistlogin')
-@user_passes_test(is_admin)
 def update_doctor_view(request,pk):
     doctor=models.Doctor.objects.get(id=pk)
     user=models.User.objects.get(id=doctor.user_id)
@@ -334,7 +431,6 @@ def update_patient_view(request,pk):
 
 
 
-
 @login_required(login_url='Receptionistlogin')
 @user_passes_test(is_admin)
 def admin_add_patient_view(request):
@@ -363,7 +459,7 @@ def admin_add_patient_view(request):
 
 
 
-#------------------FOR APPROVING PATIENT BY ADMIN----------------------
+#------------------FOR APPROVING PATIENT BY RECEPTIONIST(ADMIN)----------------------
 @login_required(login_url='Receptionistlogin')
 @user_passes_test(is_admin)
 def admin_approve_patient_view(request):
@@ -394,7 +490,7 @@ def reject_patient_view(request,pk):
 
 
 
-#--------------------- FOR DISCHARGING PATIENT BY ADMIN START-------------------------
+#--------------------- FOR DISCHARGING PATIENT BY RECEPTIONIST(ADMIN) START-------------------------
 @login_required(login_url='Receptionistlogin')
 @user_passes_test(is_admin)
 def admin_discharge_patient_view(request):
@@ -525,6 +621,7 @@ def admin_add_appointment_view(request):
             appointment.save()
         return HttpResponseRedirect('Receptionist-view-appointment')
     return render(request,'hospital/admin_add_appointment.html',context=mydict)
+
 
 
 
@@ -696,16 +793,6 @@ def doc_view_patient_view(request):
 
 @login_required(login_url='doctorlogin')
 @user_passes_test(is_doctor)
-def delete_patient_from_hospital_view(request,pk):
-    patient=models.Patient.objects.get(id=pk)
-    user=models.User.objects.get(id=patient.user_id)
-    user.delete()
-    patient.delete()
-    return redirect('doc-view-patient')
-
-
-@login_required(login_url='doctorlogin')
-@user_passes_test(is_doctor)
 def doc_update_patient_view(request,pk):
     patient=models.Patient.objects.get(id=pk)
     user=models.User.objects.get(id=patient.user_id)
@@ -756,8 +843,7 @@ def doc_update_patient_view(request,pk):
 #---------------------------------------------------------------------------------
 #------------------------ PATIENT RELATED VIEWS START ------------------------------
 #---------------------------------------------------------------------------------
-@login_required(login_url='patientlogin')
-@user_passes_test(is_patient)
+
 def patient_dashboard_view(request):
     patient=models.Patient.objects.get(user_id=request.user.id)
     doctor=models.Doctor.objects.get(user_id=patient.assignedDoctorId)
@@ -768,6 +854,15 @@ def patient_dashboard_view(request):
     'doctorAddress':doctor.address,
     'symptoms':patient.symptoms,
     'doctorDepartment':doctor.department,
+    'doctorMondays':doctor.mondays,
+    'doctorTuesdays':doctor.tuesdays,
+    'doctorWednesdays':doctor.wednesdays,
+    'doctorThursdays':doctor.thursdays,
+    'doctorFridays':doctor.fridays,
+    'doctorSaturdays':doctor.saturdays,
+    'doctorSundays':doctor.sundays,
+
+
     'admitDate':patient.admitDate,
     }
     return render(request,'hospital/patient_dashboard.html',context=mydict)
@@ -921,11 +1016,6 @@ def patient_discharge_view(request):
 #---------------------------------------------------------------------------------
 #------------------------ ABOUT US AND CONTACT US VIEWS START ------------------------------
 #---------------------------------------------------------------------------------
-def aboutus_view(request):
-    return render(request,'hospital/aboutus.html')
-
-def contactus_view(request):
-    return render(request, 'hospital/contact_us.html')
 
 def alldepartments_view(request):
     return render(request, 'hospital/departments.html')  

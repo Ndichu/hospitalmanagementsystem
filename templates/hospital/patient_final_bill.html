@@ -133,11 +133,12 @@
                 <table>
                     <tr>
                         <td>
-                            Patient Name : {{name}}<br> Patient Mobile : {{mobile}}<br> Patient Addres : {{address}}<br>
+                            Admitted Patient : {{name}}<br> Phone number : {{mobile}}<br> Patient Address : {{address}}<br>
                         </td>
 
+
                         <td>
-                            Doctor Name :<br> {{assignedDoctorName}}
+                            Doctor incharge of {{name}}<br> is {{assignedDoctorName}}
                             <br>
 
                         </td>
@@ -148,7 +149,7 @@
 
         <tr class="heading">
             <td>
-                Disease and Symptoms
+                Patient Symptoms
             </td>
             <td>
 
@@ -163,17 +164,17 @@
         </tr>
         <tr class="heading">
             <td>
-                Item
+                Charges
             </td>
 
             <td>
-                Price
+                Costs
             </td>
         </tr>
 
         <tr class="item">
             <td>
-                Room Charge of {{day}} Days
+                Admission for {{day}} Days
             </td>
 
             <td>
@@ -183,7 +184,7 @@
 
         <tr class="item">
             <td>
-                Doctor Fee
+                Consultation fees
             </td>
 
             <td>
@@ -193,7 +194,7 @@
 
         <tr class="item">
             <td>
-                Medicine Cost
+                Prescribed medicine total
             </td>
 
             <td>
@@ -203,7 +204,7 @@
 
         <tr class="item last">
             <td>
-                Other Charge
+                Service fees
             </td>
 
             <td>

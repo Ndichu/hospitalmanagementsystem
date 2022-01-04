@@ -1,0 +1,19 @@
+{% extends 'hospital/receptionist_base.html' %}{% load static %} {% block content %}{% load widget_tweaks %}
+<center>
+    <h1>Doctors calender of appointments</h1><br><br><br>{{time}}<br><br><br><br> {{ cal|safe }}<br><br><br><br> Copyright © {{ current_year }}</center>
+<script>
+    $(document).ready(function() {
+
+        $('#calendar').fullCalendar({
+            defaultDate: '2016-07-19',
+            editable: true,
+            eventLimit: true, // allow "more" link when too many events
+
+        });
+
+    });
+</script>
+
+
+
+{% endblock content %}

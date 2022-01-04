@@ -9,13 +9,7 @@ from django.contrib.auth.views import LoginView,LogoutView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',views.home_view,name=''),
-
     
-
-
-
-    path('aboutus', views.aboutus_view),
-    path('contactus', views.contactus_view),
     path('departments', views.alldepartments_view),
     path('book-appointment', views.bookappointment_view),
 
@@ -37,6 +31,16 @@ urlpatterns = [
 
 
     path('Receptionist-dashboard', views.admin_dashboard_view,name='admin-dashboard'),
+
+    # search url
+    path('search_patients', views.search_patients, name='search_patients'),
+
+    # calendar url
+
+    path('<int:year>/<str:month>/', views.admin_dashboard_view, name='doctor_calendar'),
+
+
+
 
     path('Receptionist-doctor', views.admin_doctor_view,name='admin-doctor'),
     path('Receptionist-view-doctor', views.admin_view_doctor_view,name='Receptionist-view-doctor'),
@@ -66,7 +70,7 @@ urlpatterns = [
 
 
     path('Receptionist-appointment', views.admin_appointment_view,name='admin-appointment'),
-    path('Receptionist-view-appointment', views.admin_view_appointment_view,name='admin-view-appointment'),
+    path('Receptionist-view-appointment', views.admin_view_appointment_view,name='Receptionist-view-appointment'),
     path('Receptionist-add-appointment', views.admin_add_appointment_view,name='admin-add-appointment'),
     path('Receptionist-approve-appointment', views.admin_approve_appointment_view,name='admin-approve-appointment'),
     path('approve-appointment/<int:pk>', views.approve_appointment_view,name='approve-appointment'),

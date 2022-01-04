@@ -1,0 +1,45 @@
+{% extends 'hospital/receptionist_base.html' %}{% load static %} {% block content %}{% load widget_tweaks %} {% if searched %}
+<h1>You searched for {{ searched }}</h1>{% endif %}{% else %}
+<h1>Hey you forgot to type in the name of the patient</h1>{% endif %}
+<div class="card mb-0 ">
+    <div class="card-header ">
+        All Patient list
+    </div>
+    <div class="card-body ">
+        <div class="table-responsive ">
+            <table class="table table-hover ">
+                <thead>
+                    <tr>
+
+                        <th scope="col ">Patient Id</th>
+                        <th scope="col ">Patient Name</th>
+
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for Patient in object_list %}
+                    <tr>
+                        <td>
+                            <div class="d-flex align-items-center nowrap text-primary ">
+                                <span class="icofont-ui-wheelchair "></span><strong>{{Patient.id}}</strong>
+                            </div>
+
+
+                        </td>
+                        <td>
+                            <div class="d-flex align-items-center nowrap text-primary ">
+                                <span class="icofont-ui-wheelchair "></span>{{Patient.user}}
+                            </div>
+                        </td>
+
+
+                    </tr>
+                    {% endfor %}
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock content %}
